@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="키/쿠 결과를 재미로 예측해 보는 시뮬레이션 페이지" />
+    <title>즐거운 홀짝예측게임</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <nav class="topbar" aria-label="주 메뉴">
+        <a class="logo" href="#top" aria-label="ODDLY 홈"><span>O</span>DDLY</a>
+        <div class="status"><i></i> ANALYSIS ENGINE ONLINE</div>
+        <button class="history-toggle" id="historyToggle" type="button">최근 기록 <span id="historyCount">0</span></button>
+      </nav>
+
+      <section class="hero" id="top">
+        <p class="eyebrow">ODD / EVEN SIMULATOR</p>
+        <h1>즐거운<br /><em>홀짝예측게임</em></h1>
+        <p class="intro">최근 결과를 바탕으로 만들어진 재미용 예측입니다.<br />정답을 보장하지 않으니, 게임처럼 즐겨주세요.</p>
+      </section>
+
+      <section class="prediction-card" aria-labelledby="prediction-title">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">NEXT ROUND</p>
+            <h2 id="prediction-title">다음 결과 예측</h2>
+          </div>
+          <span class="round-label" id="roundLabel">ROUND 01</span>
+        </div>
+
+        <div class="result-area" aria-live="polite">
+          <div class="orb-wrap"><div class="orb" id="orb">?</div></div>
+          <p class="result-label" id="resultLabel">분석을 시작해 보세요</p>
+          <p class="result-detail" id="resultDetail">최근 10개 결과를 모두 입력하면 표본 기반 확률을 계산합니다.</p>
+        </div>
+
+        <div class="input-heading"><span>최근 결과 입력</span><small><b id="inputCount">0</b> / 10</small></div>
+        <div class="result-inputs" id="resultInputs" role="group" aria-label="최근 10개 키/쿠 결과 입력">
+          <button type="button" data-index="0"><small>01</small><strong>?</strong></button><button type="button" data-index="1"><small>02</small><strong>?</strong></button>
+          <button type="button" data-index="2"><small>03</small><strong>?</strong></button><button type="button" data-index="3"><small>04</small><strong>?</strong></button>
+          <button type="button" data-index="4"><small>05</small><strong>?</strong></button><button type="button" data-index="5"><small>06</small><strong>?</strong></button>
+          <button type="button" data-index="6"><small>07</small><strong>?</strong></button><button type="button" data-index="7"><small>08</small><strong>?</strong></button>
+          <button type="button" data-index="8"><small>09</small><strong>?</strong></button><button type="button" data-index="9"><small>10</small><strong>?</strong></button>
+        </div>
+        <p class="input-hint">각 칸을 누르면 <b>키 → 쿠 → 비우기</b> 순서로 바뀝니다.</p>
+        <button class="analyze-button" id="analyzeButton" type="button" disabled>10개 입력 후 확률 보기 <span>→</span></button>
+      </section>
+
+      <section class="stats-section" aria-labelledby="stats-title">
+        <div class="section-heading"><p class="eyebrow">PATTERN SNAPSHOT</p><h2 id="stats-title">입력 결과 분석</h2></div>
+        <div class="stat-grid">
+          <article class="stat-card"><span>키 비율</span><strong id="oddRate">—</strong><div class="meter"><i id="oddMeter"></i></div></article>
+          <article class="stat-card"><span>쿠 비율</span><strong id="evenRate">—</strong><div class="meter mint"><i id="evenMeter"></i></div></article>
+          <article class="stat-card accent"><span>현재 연속</span><strong id="streak">기록 없음</strong><p id="streakCopy">첫 결과를 만들어 보세요.</p></article>
+        </div>
+      </section>
+
+      <aside class="history-panel" id="historyPanel" aria-label="최근 결과">
+        <div class="panel-heading"><h2>최근 결과</h2><button id="closeHistory" type="button" aria-label="기록 닫기">×</button></div>
+        <ol id="historyList"><li class="empty-state">입력된 결과가 없습니다.</li></ol>
+        <button id="clearHistory" class="clear-button" type="button">입력 초기화</button>
+      </aside>
+      <div class="scrim" id="scrim"></div>
+    </main>
+
+    <footer>FOR FUN ONLY · 입력된 표본의 비율을 보여줄 뿐, 미래 결과를 예측하거나 보장하지 않습니다.</footer>
+    <script src="script.js"></script>
+  </body>
+</html>
