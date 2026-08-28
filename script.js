@@ -70,7 +70,13 @@ analyzeButton.addEventListener('click', () => {
   orb.className = `orb ${recommended === '키' ? 'odd' : 'even'} roll`;
   orb.textContent = recommended;
   resultLabel.textContent = `참고 추천: ${recommended} ${chance}%`;
-  resultDetail.textContent = `입력한 10개 중 ${recommended} 비율이 ${chance}%입니다. 독립 시행의 실제 다음 결과는 보장되지 않습니다.`;
+  resultDetail.textContent = `입력한 10개 중 ${recommended} 비율이 ${chance}%입니다. 예측값(${recommended})이 10번째 슬롯에 반영되었습니다.`;
+
+  // 기존 10개의 항목을 한 칸씩 밀고 마지막 예측을 10번째 기록으로 추가
+  results.shift();
+  results.push(recommended);
+  render();
+
   setTimeout(() => orb.classList.remove('roll'), 600);
 });
 
