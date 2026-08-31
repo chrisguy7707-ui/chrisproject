@@ -19,10 +19,11 @@ const summaryProfitAmount = document.querySelector('#summaryProfitAmount');
 const summaryProfitCard = document.querySelector('.summary-card.profit');
 const resultInputs = document.querySelector('#resultInputs');
 
-let results = JSON.parse(localStorage.getItem('oddly-inputs') || 'null') || Array(SLOT_COUNT).fill(null);
-results = results.map(item => item === '홀' ? '키' : item === '짝' ? '쿠' : item);
-let betAmounts = JSON.parse(localStorage.getItem('oddly-bets') || 'null') || Array(SLOT_COUNT).fill(0);
-let oddsValues = JSON.parse(localStorage.getItem('oddly-odds') || 'null') || Array(SLOT_COUNT).fill(DEFAULT_ODDS);
+['oddly-inputs', 'oddly-bets', 'oddly-odds', 'oddly-payouts'].forEach(key => localStorage.removeItem(key));
+
+let results = Array(SLOT_COUNT).fill(null);
+let betAmounts = Array(SLOT_COUNT).fill(0);
+let oddsValues = Array(SLOT_COUNT).fill(DEFAULT_ODDS);
 let payoutAmounts = Array(SLOT_COUNT).fill(0);
 
 function calculatePayout(bet, odds = DEFAULT_ODDS) {
@@ -39,8 +40,8 @@ function buildSlots() {
   resultInputs.innerHTML = Array.from({ length: SLOT_COUNT }, (_, index) => `
     <div class="result-slot" data-index="${index}">
       <button type="button"><small>${String(index + 1).padStart(2, '0')}</small><strong>?</strong></button>
-      <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
-      <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+      <label>배팅금<input type="number" min="0" step="100" value="" data-field="bet" /></label>
+      <label>당첨금<input type="number" min="0" step="100" value="" data-field="payout" readonly /></label>
     </div>
   `).join('');
 }
@@ -55,11 +56,11 @@ function bindSlotEvents() {
       const slot = button.closest('.result-slot');
       const index = Number(slot.dataset.index);
       results[index] = results[index] === null ? '키' : results[index] === '키' ? '쿠' : null;
-      if (results.filter(Boolean).length < SLOT_COUNT) {
+          if (results.filter(Boolean).length === 0) {
         orb.className = 'orb';
         orb.textContent = '?';
         resultLabel.textContent = '분석을 시작해 보세요';
-        resultDetail.textContent = '최근 30개 결과를 모두 입력하면 표본 기반 확률을 계산합니다.';
+        resultDetail.textContent = '결과를 한 번 이상 입력하면 확률을 바로 계산합니다.';
       }
       render();
     });
@@ -141,21 +142,19 @@ function render() {
 
   const betInputs = [...document.querySelectorAll('[data-field="bet"]')];
   betInputs.forEach((input, index) => {
-    input.value = betAmounts[index] ?? 0;
+    input.value = betAmounts[index] > 0 ? betAmounts[index] : '';
   });
 
   const payoutInputs = [...document.querySelectorAll('[data-field="payout"]')];
   payoutInputs.forEach((input, index) => {
     const calculated = calculatePayout(betAmounts[index], oddsValues[index] ?? DEFAULT_ODDS);
     payoutAmounts[index] = calculated;
-    input.value = calculated;
+    input.value = calculated > 0 ? calculated : '';
   });
 
   document.querySelector('#inputCount').textContent = total;
-  analyzeButton.disabled = total !== SLOT_COUNT;
-  analyzeButton.innerHTML = total === SLOT_COUNT
-    ? '30개 입력 후 확률 보기 <span>→</span>'
-    : `30개 입력 후 확률 보기 (${total}/${SLOT_COUNT}) <span>→</span>`;
+  analyzeButton.disabled = total === 0;
+  analyzeButton.innerHTML = '확률 보기 <span>→</span>';
   document.querySelector('#oddRate').textContent = total ? `${oddRate}%` : '—';
   document.querySelector('#evenRate').textContent = total ? `${100 - oddRate}%` : '—';
   document.querySelector('#oddMeter').style.width = `${oddRate}%`;
@@ -184,7 +183,7 @@ randomFillButton.addEventListener('click', fillRandomResults);
 
 analyzeButton.addEventListener('click', () => {
   const filled = results.filter(Boolean);
-  if (filled.length !== SLOT_COUNT) return;
+  if (filled.length === 0) return;
 
   const oddCount = filled.filter(item => item === '키').length;
   const oddRate = Math.round((oddCount / filled.length) * 100);
@@ -194,10 +193,8 @@ analyzeButton.addEventListener('click', () => {
   orb.className = `orb ${recommended === '키' ? 'odd' : 'even'} roll`;
   orb.textContent = recommended;
   resultLabel.textContent = `참고 추천: ${recommended} ${chance}%`;
-  resultDetail.textContent = `입력한 ${SLOT_COUNT}개 중 ${recommended} 비율이 ${chance}%입니다. 예측값(${recommended})이 마지막 슬롯에 반영되었습니다.`;
+  resultDetail.textContent = `입력한 ${filled.length}개 중 ${recommended} 비율이 ${chance}%입니다. 현재 표본 기준 예측값입니다.`;
 
-  results.shift();
-  results.push(recommended);
   render();
 
   setTimeout(() => orb.classList.remove('roll'), 600);
@@ -215,10 +212,12 @@ document.querySelector('#clearHistory').addEventListener('click', () => {
   localStorage.removeItem('oddly-bets');
   localStorage.removeItem('oddly-odds');
   localStorage.removeItem('oddly-payouts');
+  document.querySelectorAll('[data-field="bet"]').forEach(input => { input.value = ''; });
+  document.querySelectorAll('[data-field="payout"]').forEach(input => { input.value = ''; });
   orb.className = 'orb';
   orb.textContent = '?';
   resultLabel.textContent = '분석을 시작해 보세요';
-  resultDetail.textContent = '최근 30개 결과를 모두 입력하면 표본 기반 확률을 계산합니다.';
+  resultDetail.textContent = '결과를 한 번 이상 입력하면 확률을 바로 계산합니다.';
   render();
 });
 
