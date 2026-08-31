@@ -97,8 +97,8 @@ function updateTotals() {
 
   const feeNote = document.querySelector('.fee-note');
   feeNote.textContent = fee > 0
-    ? `※ 배팅금의 10% 수수료 ${formatCurrency(fee)}가 차감되어 최종 지급액 ${formatCurrency(net)}이 표시됩니다.`
-    : '※ 배팅금의 10% 수수료가 차감되어 최종 지급액이 표시됩니다.';
+    ? `※ 배팅금의 10% 수수료 ${formatCurrency(fee)}가 차감됩니다.`
+    : '※ 배팅금의 10% 수수료가 차감됩니다.';
 }
 
 function fillRandomResults() {
