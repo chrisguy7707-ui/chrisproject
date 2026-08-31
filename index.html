@@ -41,14 +41,103 @@
 
         <div class="input-heading"><span>최근 결과 입력</span><small><b id="inputCount">0</b> / 10</small></div>
         <div class="result-inputs" id="resultInputs" role="group" aria-label="최근 10개 키/쿠 결과 입력">
-          <button type="button" data-index="0"><small>01</small><strong>?</strong></button><button type="button" data-index="1"><small>02</small><strong>?</strong></button>
-          <button type="button" data-index="2"><small>03</small><strong>?</strong></button><button type="button" data-index="3"><small>04</small><strong>?</strong></button>
-          <button type="button" data-index="4"><small>05</small><strong>?</strong></button><button type="button" data-index="5"><small>06</small><strong>?</strong></button>
-          <button type="button" data-index="6"><small>07</small><strong>?</strong></button><button type="button" data-index="7"><small>08</small><strong>?</strong></button>
-          <button type="button" data-index="8"><small>09</small><strong>?</strong></button><button type="button" data-index="9"><small>10</small><strong>?</strong></button>
+          <div class="result-slot" data-index="0">
+            <button type="button"><small>01</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="1">
+            <button type="button"><small>02</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="2">
+            <button type="button"><small>03</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="3">
+            <button type="button"><small>04</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="4">
+            <button type="button"><small>05</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="5">
+            <button type="button"><small>06</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="6">
+            <button type="button"><small>07</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="7">
+            <button type="button"><small>08</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="8">
+            <button type="button"><small>09</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
+          <div class="result-slot" data-index="9">
+            <button type="button"><small>10</small><strong>?</strong></button>
+            <label>배팅금<input type="number" min="0" step="100" value="0" data-field="bet" /></label>
+            <label>배당률<input type="number" min="1" step="0.1" value="1.9" data-field="odds" /></label>
+            <label>당첨금<input type="number" min="0" step="100" value="0" data-field="payout" readonly /></label>
+          </div>
         </div>
         <p class="input-hint">각 칸을 누르면 <b>키 → 쿠 → 비우기</b> 순서로 바뀝니다.</p>
-        <button class="analyze-button" id="analyzeButton" type="button" disabled>10개 입력 후 확률 보기 <span>→</span></button>
+        <div class="action-row">
+          <button class="secondary-button" id="randomFillButton" type="button">랜덤 결과 채우기</button>
+          <button class="analyze-button" id="analyzeButton" type="button" disabled>10개 입력 후 확률 보기 <span>→</span></button>
+        </div>
+
+        <div class="totals-panel" aria-live="polite">
+          <div class="total-row">
+            <span>총 베팅금</span>
+            <strong id="totalBetAmount">0원</strong>
+          </div>
+          <div class="total-row">
+            <span>총 당첨금</span>
+            <strong id="totalPayoutAmount">0원</strong>
+          </div>
+          <div class="total-row accent">
+            <span>수수료 차감 후 지급액</span>
+            <strong id="netPayoutAmount">0원</strong>
+          </div>
+          <p class="fee-note">※ 당첨금의 10% 수수료가 차감되어 최종 지급액이 표시됩니다.</p>
+        </div>
+
+        <div class="summary-grid" aria-live="polite">
+          <article class="summary-card win">
+            <span>당첨</span>
+            <strong id="summaryWinAmount">0원</strong>
+          </article>
+          <article class="summary-card loss">
+            <span>손실</span>
+            <strong id="summaryLossAmount">0원</strong>
+          </article>
+          <article class="summary-card profit">
+            <span>순수익</span>
+            <strong id="summaryProfitAmount">0원</strong>
+          </article>
+        </div>
       </section>
 
       <section class="stats-section" aria-labelledby="stats-title">
