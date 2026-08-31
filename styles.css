@@ -2,9 +2,13 @@
 * { box-sizing:border-box; }
 body { margin:0; color:var(--ink); background:var(--paper); font-family:"Noto Sans KR",sans-serif; }
 button { font:inherit; cursor:pointer; }
-input[type="number"] { -moz-appearance:textfield; }
+input[type="number"] { -moz-appearance:textfield; font-size:16px; }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+@media (max-width:600px) {
+  html, body { -webkit-text-size-adjust: 100%; }
+  input[type="number"], select, textarea { font-size:16px; }
+}
 .page-shell { max-width:1120px; margin:0 auto; padding:28px 32px 70px; }
 .topbar { display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .logo { color:var(--ink); text-decoration:none; font:800 20px "Manrope",sans-serif; letter-spacing:-1.2px; }.logo span { color:var(--coral); }
@@ -67,7 +71,7 @@ input[type="number"]::-webkit-inner-spin-button { -webkit-appearance:none; margi
   .result-slot { padding:9px 7px; }
   .result-slot button { min-height:60px; }
   .result-slot button strong { font-size:16px; }
-  .result-slot input { min-height:42px; font-size:12px; }
+  .result-slot input { min-height:42px; font-size:16px; }
   .action-row { flex-direction:column; }
   .secondary-button, .analyze-button { width:100%; }
   .totals-panel { padding:14px 12px; }
