@@ -82,14 +82,14 @@ function updateTotals() {
   payoutAmounts = betAmounts.map((bet, index) => calculatePayout(bet, oddsValues[index] ?? DEFAULT_ODDS));
   const totalPayout = payoutAmounts.reduce((sum, next) => sum + Number(next || 0), 0);
   const fee = totalBet * 0.1;
-  const net = totalPayout - fee;
-  const winAmount = Math.max(net - totalBet, 0);
-  const lossAmount = Math.max(totalBet - net, 0);
-  const profitAmount = net - totalBet;
+  const net = totalPayout;
+  const winAmount = Math.max(totalPayout - totalBet, 0);
+  const lossAmount = Math.max(totalBet - totalPayout, 0);
+  const profitAmount = totalPayout - totalBet;
 
   totalBetAmount.textContent = formatCurrency(totalBet);
   totalPayoutAmount.textContent = formatCurrency(totalPayout);
-  netPayoutAmount.textContent = formatCurrency(net);
+  netPayoutAmount.textContent = formatCurrency(fee);
   summaryWinAmount.textContent = formatCurrency(winAmount);
   summaryLossAmount.textContent = formatCurrency(lossAmount);
   summaryProfitAmount.textContent = formatCurrency(profitAmount);
@@ -97,8 +97,8 @@ function updateTotals() {
 
   const feeNote = document.querySelector('.fee-note');
   feeNote.textContent = fee > 0
-    ? `※ 배팅금의 10% 수수료 ${formatCurrency(fee)}가 차감됩니다.`
-    : '※ 배팅금의 10% 수수료가 차감됩니다.';
+    ? '※ 배팅금의 10% 수수료는 별도 기준이며 당첨금은 그대로 표시됩니다.'
+    : '※ 배팅금의 10% 수수료는 별도 기준이며 당첨금은 그대로 표시됩니다.';
 }
 
 function fillRandomResults() {
