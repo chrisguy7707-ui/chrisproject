@@ -81,7 +81,7 @@ function updateTotals() {
   const totalBet = betAmounts.reduce((sum, next) => sum + Number(next || 0), 0);
   payoutAmounts = betAmounts.map((bet, index) => calculatePayout(bet, oddsValues[index] ?? DEFAULT_ODDS));
   const totalPayout = payoutAmounts.reduce((sum, next) => sum + Number(next || 0), 0);
-  const fee = totalPayout * 0.1;
+  const fee = totalBet * 0.1;
   const net = totalPayout - fee;
   const winAmount = Math.max(net - totalBet, 0);
   const lossAmount = Math.max(totalBet - net, 0);
@@ -97,8 +97,8 @@ function updateTotals() {
 
   const feeNote = document.querySelector('.fee-note');
   feeNote.textContent = fee > 0
-    ? `※ 당첨금의 10% 수수료 ${formatCurrency(fee)}가 차감되어 최종 지급액 ${formatCurrency(net)}이 표시됩니다.`
-    : '※ 당첨금의 10% 수수료가 차감되어 최종 지급액이 표시됩니다.';
+    ? `※ 배팅금의 10% 수수료 ${formatCurrency(fee)}가 차감되어 최종 지급액 ${formatCurrency(net)}이 표시됩니다.`
+    : '※ 배팅금의 10% 수수료가 차감되어 최종 지급액이 표시됩니다.';
 }
 
 function fillRandomResults() {
