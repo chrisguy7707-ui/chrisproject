@@ -56,11 +56,10 @@ function bindSlotEvents() {
       const slot = button.closest('.result-slot');
       const index = Number(slot.dataset.index);
       results[index] = results[index] === null ? '키' : results[index] === '키' ? '쿠' : null;
-          if (results.filter(Boolean).length === 0) {
+      if (results.filter(Boolean).length === 0) {
         orb.className = 'orb';
         orb.textContent = '?';
         resultLabel.textContent = '분석을 시작해 보세요';
-        resultDetail.textContent = '결과를 한 번 이상 입력하면 확률을 바로 계산합니다.';
       }
       render();
     });
@@ -125,6 +124,25 @@ function getStreak() {
   return { value: latest, length };
 }
 
+function getAccuracyMessage(total) {
+  if (total === 0) {
+    return '결과를 한 번 이상 입력하면 확률을 바로 계산합니다.';
+  }
+  if (total <= 3) {
+    return '입력 수가 적어 확률 신뢰도는 낮은 편입니다.';
+  }
+  if (total <= 9) {
+    return '초기 표본이 쌓이고 있어, 흐름을 살짝 참고할 수 있습니다.';
+  }
+  if (total <= 19) {
+    return '표본이 어느 정도 쌓여 있어 확률 해석이 점점 안정적입니다.';
+  }
+  if (total <= 29) {
+    return '입력량이 많아져 분석 신뢰도가 높은 편입니다.';
+  }
+  return '30개 표본 기준으로 가장 안정적인 확률 분석 상태입니다.';
+}
+
 function render() {
   const entered = results.filter(Boolean);
   const oddCount = entered.filter(item => item === '키').length;
@@ -155,6 +173,7 @@ function render() {
   document.querySelector('#inputCount').textContent = total;
   analyzeButton.disabled = total === 0;
   analyzeButton.innerHTML = '확률 보기 <span>→</span>';
+  resultDetail.textContent = getAccuracyMessage(total);
   document.querySelector('#oddRate').textContent = total ? `${oddRate}%` : '—';
   document.querySelector('#evenRate').textContent = total ? `${100 - oddRate}%` : '—';
   document.querySelector('#oddMeter').style.width = `${oddRate}%`;
@@ -193,7 +212,7 @@ analyzeButton.addEventListener('click', () => {
   orb.className = `orb ${recommended === '키' ? 'odd' : 'even'} roll`;
   orb.textContent = recommended;
   resultLabel.textContent = `참고 추천: ${recommended} ${chance}%`;
-  resultDetail.textContent = `입력한 ${filled.length}개 중 ${recommended} 비율이 ${chance}%입니다. 현재 표본 기준 예측값입니다.`;
+  resultDetail.textContent = `${getAccuracyMessage(filled.length)} 현재 ${filled.length}개 표본 기준 ${recommended} 확률이 ${chance}%입니다.`;
 
   render();
 
@@ -217,7 +236,7 @@ document.querySelector('#clearHistory').addEventListener('click', () => {
   orb.className = 'orb';
   orb.textContent = '?';
   resultLabel.textContent = '분석을 시작해 보세요';
-  resultDetail.textContent = '결과를 한 번 이상 입력하면 확률을 바로 계산합니다.';
+  resultDetail.textContent = getAccuracyMessage(0);
   render();
 });
 
